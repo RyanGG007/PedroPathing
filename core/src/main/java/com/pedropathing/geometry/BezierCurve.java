@@ -642,7 +642,7 @@ public class BezierCurve implements Curve {
             targetPointMatrix.setRow(i, points[i].getX(), points[i].getY());
         }
 
-        Matrix outputControlPoints = Matrix.rref(tMatrix.multiply(bezier), MatrixUtil.eye(points.length))[1].multiply(targetPointMatrix);
+        Matrix outputControlPoints = Matrix.rref(tMatrix.multiply(bezier), MatrixUtil.identity(points.length))[1].multiply(targetPointMatrix);
         Pose[] output = new Pose[points.length];
 
         for (int i = 0; i < outputControlPoints.getRows(); i++) {
@@ -650,5 +650,10 @@ public class BezierCurve implements Curve {
         }
 
         return new BezierCurve(output);
+    }
+
+    @Override
+    public ArrayList<FuturePose> getFutureControlPoints() {
+        return futureControlPoints;
     }
 }
